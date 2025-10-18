@@ -1,1106 +1,550 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="es">
-
-  <cabeza>
-
+  <head>
     <meta charset="utf-8" />
-
-    <meta content="width=ancho-del-dispositivo, escala-inicial=1.0" name="ventana gráfica" />
-
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Ha Resucitado Radio - Stream</title>
-
     
-
-    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconexión" />
-
-    <enlace
-
-      como="estilo"
-
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link
+      as="style"
       href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900"
-
-      onload="this.rel='hoja de estilo'"
-
-      rel="hoja de estilo"
-
+      onload="this.rel='stylesheet'"
+      rel="stylesheet"
     />
-
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-    <enlace
-
+    <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-
-      rel="hoja de estilo"
-
+      rel="stylesheet"
     />
-
-    <enlace
-
-      crossorigin="anónimo"
-
+    <link
+      crossorigin="anonymous"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-
-      integridad="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-
-      referrerpolicy="sin referencia"
-
-      rel="hoja de estilo"
-
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      referrerpolicy="no-referrer"
+      rel="stylesheet"
     />
-
-
 
     <style type="text/tailwindcss">
-
-      :raíz {
-
+      :root {
         /* COLORES BASADOS EN LA IMAGEN ADJUNTA */
-
-        --color primario: #6E8E30; /* Verde Oliva Oscuro, como el acento del logo */
-
-        --fondo oscuro: #1A1A1A; /* Gris muy Oscuro para el fondo principal */
-
-        --luz de fondo: #2C2C2C; /* Gris intermedio para tarjetas y barra de navegación */
-
-        --texto-luz: #f0f0f0; /* Texto casi blanco */
-
-        --texto oscuro: #A0A0A0; /* Texto gris claro para descripciones */
-
+        --primary-color: #6E8E30; /* Verde Oliva Oscuro, como el acento del logo */
+        --background-dark: #1A1A1A; /* Gris muy Oscuro para el fondo principal */
+        --background-light: #2C2C2C; /* Gris intermedio para tarjetas y navbar */
+        --text-light: #f0f0f0; /* Texto casi blanco */
+        --text-dark: #A0A0A0; /* Texto gris claro para descripciones */
       }
-
       
-
       /* Estilos específicos para el video de fondo */
-
-      #video-de-fondo {
-
-        objeto-ajuste: cubierta;
-
-        índice z: -1; 
-
-        filtro: brillo(0.9); 
-
+      #video-background {
+        object-fit: cover;
+        z-index: -1; 
+        filter: brightness(0.9); 
       }
-
-
 
       /* Estilos para simular la onda de sonido (Visualizador) */
-
-      @keyframes pulsar {
-
-        0%, 100% { altura: 10%; }
-
-        50% { altura: 100%; }
-
+      @keyframes pulsate {
+        0%, 100% { height: 10%; }
+        50% { height: 100%; }
       }
-
-      .barra de sonido {
-
-        color de fondo: var(--color primario);
-
-        ancho: 3px; /*Ancho de la barra*/
-
-        margen: 0 1px; /* Espaciado entre barras */
-
-        animación: pulsar 0,5 s entrada-salida suave alternancia infinita;
-
-        radio del borde: 9999px;
-
+      .sound-bar {
+        background-color: var(--primary-color);
+        width: 3px; /* Ancho de la barra */
+        margin: 0 1px; /* Espaciado entre barras */
+        animation: pulsate 0.5s ease-in-out infinite alternate;
+        border-radius: 9999px;
       }
-
       /* Ajuste de retraso para cada barra (para 12 barras) */
-
-      .sound-bar:nth-child(2) { retraso de animación: 0,05 s; }
-
-      .sound-bar:nth-child(3) { retraso de animación: 0,1 s; }
-
-      .sound-bar:nth-child(4) { retraso de animación: 0,15 s; }
-
-      .sound-bar:nth-child(5) { retraso de animación: 0,2 s; }
-
-      .sound-bar:nth-child(6) { retraso de animación: 0,25 s; }
-
-      .sound-bar:nth-child(7) { retraso de animación: 0.3s; }
-
-      .sound-bar:nth-child(8) { retraso de animación: 0,35 s; }
-
-      .sound-bar:nth-child(9) { retraso de animación: 0,4 s; }
-
-      .sound-bar:nth-child(10) { retraso de animación: 0,45 s; }
-
-      .sound-bar:nth-child(11) { retraso de animación: 0,5 s; }
-
-      .sound-bar:nth-child(12) { retraso de animación: 0,55 s; }
-
-    </estilo>
-
-    <guión>
-
-      viento de cola.config = {
-
-        darkMode: "clase",
-
-        tema: {
-
-          extender: {
-
-            colores: {
-
-              primario: "var(--color-primario)",
-
-              "fondo-oscuro": "var(--fondo-oscuro)",
-
-              "luz de fondo": "var(--luz de fondo)",
-
-              "texto-luz": "var(--texto-luz)",
-
-              "texto-oscuro": "var(--texto-oscuro)",
-
+      .sound-bar:nth-child(2) { animation-delay: 0.05s; }
+      .sound-bar:nth-child(3) { animation-delay: 0.1s; }
+      .sound-bar:nth-child(4) { animation-delay: 0.15s; }
+      .sound-bar:nth-child(5) { animation-delay: 0.2s; }
+      .sound-bar:nth-child(6) { animation-delay: 0.25s; }
+      .sound-bar:nth-child(7) { animation-delay: 0.3s; }
+      .sound-bar:nth-child(8) { animation-delay: 0.35s; }
+      .sound-bar:nth-child(9) { animation-delay: 0.4s; }
+      .sound-bar:nth-child(10) { animation-delay: 0.45s; }
+      .sound-bar:nth-child(11) { animation-delay: 0.5s; }
+      .sound-bar:nth-child(12) { animation-delay: 0.55s; }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "var(--primary-color)",
+              "background-dark": "var(--background-dark)",
+              "background-light": "var(--background-light)",
+              "text-light": "var(--text-light)",
+              "text-dark": "var(--text-dark)",
             },
-
-            Familia de fuentes: {
-
-              pantalla: ["Inter", "sans-serif"],
-
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
             },
-
-            radio del borde: {
-
-              PREDETERMINADO: "0.375rem",
-
+            borderRadius: {
+              DEFAULT: "0.375rem",
               lg: "0.5rem",
-
-              xl: "0,75rem",
-
+              xl: "0.75rem",
               '2xl': '1rem',
-
-              '3xl': '1,5rem',
-
+              '3xl': '1.5rem',
               '4xl': '2rem',
-
-              completo: "9999px",
-
+              full: "9999px",
             },
-
           },
-
         },
-
       };
-
     </script>
-
     
-
-  </cabeza>
-
+  </head>
   <body class="font-display text-text-light">
-
     
-
     <div id="video-background-container" class="fixed top-0 left-0 w-full h-full overflow-hidden">
-
-      <video reproducción automática bucle silenciado reproduce en línea id="video-background" clase="w-full h-full absolute">
-
-        <fuente src="mifondo.mov" tipo="video/quicktime"> 
-
-        <fuente src="mifondo.mp4" tipo="video/mp4">
-
-        Tu navegador no soporta el elemento de vídeo.
-
+      <video autoplay loop muted playsinline id="video-background" class="w-full h-full absolute">
+        <source src="mifondo.mov" type="video/quicktime"> 
+        <source src="mifondo.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
       </video>
-
     </div>
-
-    <división
-
-      clase="flexibilidad relativa min-h-pantalla w-full flex-col desbordamiento-x-oculto"
-
+    <div
+      class="relative flex min-h-screen w-full flex-col overflow-x-hidden"
     >
-
-      <división
-
-        clase="w-full h-2 bg-primary shadow-xl shadow-primary/40"
-
+      <div
+        class="w-full h-2 bg-primary shadow-xl shadow-primary/40"
       ></div>
 
-
-
-      <div class="diseño-contenedor flex h-full crecimiento flex-col">
-
-        <encabezado
-
-          clase="elementos flexibles-centro justificar-entre espacio en blanco-ahora-borde-b borde-fondo-claro px-4 md:px-10 py-4 bg-fondo-oscuro/80 pegajoso superior-0 z-30 fondo-desenfoque-pequeño"
-
+      <div class="layout-container flex h-full grow flex-col">
+        <header
+          class="flex items-center justify-between whitespace-nowrap border-b border-background-light px-4 md:px-10 py-4 bg-background-dark/80 sticky top-0 z-30 backdrop-blur-sm"
         >
-
           
-
           <div class="flex items-center gap-3 text-white">
-
             <div class="h-20 w-auto"> 
-
               <img src="casaderefugio.png" alt="Logo Ha Resucitado" class="h-full w-auto"> 
-
             </div>
-
             <h2 class="text-xl font-bold">Iglesia Casa de Refugio</h2>
-
           </div> 
-
           <div class="flex flex-1 justify-end items-center gap-6">
-
             <nav class="hidden md:flex items-center gap-6">
-
               <a
-
-                clase="texto-pequeño fuente-media texto-texto-oscuro pasar el cursor sobre:texto-primario colores de transición"
-
+                class="text-sm font-medium text-text-dark hover:text-primary transition-colors"
                 href="#"
-
                 >Inicio</a
-
               >
-
               <a
-
-                clase="texto-pequeño fuente-media texto-texto-oscuro pasar el cursor sobre:texto-primario colores de transición"
-
+                class="text-sm font-medium text-text-dark hover:text-primary transition-colors"
                 href="#"
-
                 >Programación</a
-
               >
-
               <a
-
-                clase="texto-pequeño fuente-media texto-texto-oscuro pasar el cursor sobre:texto-primario colores de transición"
-
+                class="text-sm font-medium text-text-dark hover:text-primary transition-colors"
                 href="#"
-
                 >Noticias</a
-
               >
-
               <a
-
-                clase="texto-pequeño fuente-media texto-texto-oscuro pasar el cursor sobre:texto-primario colores de transición"
-
+                class="text-sm font-medium text-text-dark hover:text-primary transition-colors"
                 href="#contacto"
-
                 >Contacto</a
-
               >
-
             </nav>
-
-            <div class="elementos flexibles-centro espacio-2">
-
-              <botón
-
-                clase="elementos flexibles-centro justificar-centro redondeado-completo alto-10 ancho-10 fondo-luz hover:fondo-primario/20 colores-de-transición"
-
+            <div class="flex items-center gap-2">
+              <button
+                class="flex items-center justify-center rounded-full h-10 w-10 bg-background-light hover:bg-primary/20 transition-colors"
               >
-
-                <span class="material-símbolos-contorno-texto-xl-texto-oscuro"
-
-                  >buscar</span
-
+                <span class="material-symbols-outlined text-xl text-text-dark"
+                  >search</span
                 >
-
-              </botón>
-
+              </button>
             </div>
-
           </div>
-
-          </encabezado>
-
+          </header>
         
-
-        <principal
-
-          clase="px-4 md:px-10 lg:px-20 xl:px-40 flex flex-1 justificar-centrar py-8 z-10"
-
+        <main
+          class="px-4 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-8 z-10"
         >
-
-          <división
-
-            clase="diseño-contenido-contenedor flex flex-col max-w-5xl flex-1 gap-12"
-
+          <div
+            class="layout-content-container flex flex-col max-w-5xl flex-1 gap-12"
           >
-
             
-
-            <división
-
-              clase="relativo redondeado-xl desbordamiento-oculto min-h-[200px] flexión flexión-col justificar-fin fondo-cubierta fondo-centro fondo-fondo-oscuro/70"
-
-              estilo='imagen-de-fondo: gradiente-lineal(0deg, rgba(26, 26, 26, 0.8) 0%, rgba(26, 26, 26, 0.2) 50%), url("tuimagen.jpg");'
-
+            <div
+              class="relative rounded-xl overflow-hidden min-h-[200px] flex flex-col justify-end bg-cover bg-center bg-background-dark/70"
+              style='background-image: linear-gradient(0deg, rgba(26, 26, 26, 0.8) 0%, rgba(26, 26, 26, 0.2) 50%), url("tuimagen.jpg");'
             >
-
               <div class="p-8">
-
                 <h1 class="text-white text-4xl font-bold">Radio Ha Resucitado</h1>
-
                 <p class="text-text-dark mt-2">La voz de la esperanza y la fe</p>
-
               </div>
-
             </div>
-
-<división
-
-  clase="bg-background-dark/70 p-6 redondeado-xl sombra-lg borde-t-4 borde-primario fondo-desenfoque-pequeño"
-
+<div
+  class="bg-background-dark/70 p-6 rounded-xl shadow-lg border-t-4 border-primary backdrop-blur-sm"
 >
-
-  <h1 clase="texto-texto-claro texto-3xl fuente-negrita mb-4">
-
-    <span class="text-primary material-symbols-outlined align-middle mr-2">televisión en vivo</span>
-
-    Transmisión en vivo 
-
+  <h1 class="text-text-light text-3xl font-bold mb-4">
+    <span class="text-primary material-symbols-outlined align-middle mr-2">live_tv</span>
+    Transmisión En Vivo 
   </h1>
-
-  <div class="relativo w-completo desbordamiento-oculto redondeado-lg" style="relleno-superior: 56.25%">
-
+  <div class="relative w-full overflow-hidden rounded-lg" style="padding-top: 56.25%">
     <iframe
-
-      clase="absoluto top-0 izquierda-0 w-completo h-completo"
-
+      class="absolute top-0 left-0 w-full h-full"
       src="https://www.youtube.com/embed/live_stream?channel=UCsfK2ICJifVDQ9inRLS-RiQ"
-
-      borde del marco="0"
-
-      allow="acelerómetro; reproducción automática; escritura en el portapapeles; medios cifrados; giroscopio; imagen en imagen"
-
-      permitir pantalla completa
-
-      título="Transmisión en vivo"
-
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      title="Stream en Vivo"
     ></iframe>
-
   </div>
-
-  <p clase="texto-texto-oscuro mt-4 texto-sm">
-
+  <p class="text-text-dark mt-4 text-sm">
     Disfruta de la programación en tiempo real.
-
   </p>
-
 </div>
-
             
-
-            <div class="cuadrícula cuadrícula-cols-1 lg:cuadrícula-cols-3 espacio-12">
-
-              <división
-
-  clase="lg:col-span-2 bg-background-dark/70 p-8 redondeado-xl sombra-lg fondo-desenfoque-pequeño"
-
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              <div
+  class="lg:col-span-2 bg-background-dark/70 p-8 rounded-xl shadow-lg backdrop-blur-sm"
 >
-
   <div class="flex flex-col md:flex-row items-center justify-center gap-12">
-
     
-
-    <división
-
-      clase="ancho-64 alto-64 largo:ancho-96 largo:alto-96 redondeado largo fondo-cubierta fondo-centro encogimiento-0 sombra-md"
-
-      estilo='imagen-de-fondo: url("portadaaudio.jpg");'
-
+    <div
+      class="w-64 h-64 lg:w-96 lg:h-96 rounded-lg bg-cover bg-center shrink-0 shadow-md"
+      style='background-image: url("portadaaudio.jpg");'
     ></div>
-
     
-
-    <división
-
-      clase="flex flex-col elementos-centro md:elementos-inicio texto-centro md:texto-izquierda espacio-4 máx-w-sm"
-
+    <div
+      class="flex flex-col items-center md:items-start text-center md:text-left gap-4 max-w-sm"
     >
-
       <p class="text-2xl font-bold text-text-light">
-
         cualquier error por favor comprender que estamos trabajando la pagina para su mejor Funcionamiento
-
       </p>
-
       
-
-      <p clase="texto-xl fuente-media texto-primario mt-4">
-
+      <p class="text-xl font-medium text-primary mt-4">
         ¡Gracias por su paciencia!
-
       </p>
-
       
-
     </div>
-
   </div>
-
 </div>
-
               
-
-              <división
-
-                clase="bg-fondo-oscuro/70 p-8 redondeado-xl sombra-lg flex flex-col transición-total duración-300 pasar el cursor sobre: ​​sombra-xl pasar el cursor sobre: ​​sombra-primaria/50 fondo-desenfoque-pequeño"
-
+              <div
+                class="bg-background-dark/70 p-8 rounded-xl shadow-lg flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-primary/50 backdrop-blur-sm"
               >
-
-                <h2 class="text-2xl font-bold text-text-light mb-2 border-b border-primary/50 pb-2">Chat en vivo <span class="text-primary text-sm font-medium ml-2">CONECTADO</span></h2>
-
-                <p class="texto-texto-oscuro texto-sm mb-4">
-
+                <h2 class="text-2xl font-bold text-text-light mb-2 border-b border-primary/50 pb-2">Chat en Vivo <span class="text-primary text-sm font-medium ml-2">CONECTADO</span></h2>
+                <p class="text-text-dark text-sm mb-4">
                   Conéctate con otros oyentes.
-
                 </p>
-
-                <división
-
-                  clase="flex-1 flex flex-col gap-3 desbordamiento-y-auto pr-2"
-
-                  estilo="altura máxima: 200px"
-
+                <div
+                  class="flex-1 flex flex-col gap-3 overflow-y-auto pr-2"
+                  style="max-height: 200px"
                 >
-
-                  <div class="elementos flexibles-inicio brecha-2.5">
-
-                    <división
-
-                      clase="ancho-8 alto-8 redondeado-completo fondo-cubierta fondo-centro encogimiento-0 borde-2 borde-primario"
-
-                      estilo='imagen-de-fondo: url("https://picsum.photos/seed/user1/32/32");'
-
+                  <div class="flex items-start gap-2.5">
+                    <div
+                      class="w-8 h-8 rounded-full bg-cover bg-center shrink-0 border-2 border-primary"
+                      style='background-image: url("https://picsum.photos/seed/user1/32/32");'
                     ></div>
-
-                    <div class="bg-primary/20 p-3 redondeado-lg redondeado-tl-ninguno borde borde-primario/30">
-
-                      <p class="text-sm texto-texto-luz">
-
+                    <div class="bg-primary/20 p-3 rounded-lg rounded-tl-none border border-primary/30">
+                      <p class="text-sm text-text-light">
                         ¡Qué bendición esta alabanza!
-
                       </p>
-
                     </div>
-
                   </div>
-
-                  <div class="elementos flexibles-inicio espacio-2.5 ​​justificar-fin">
-
+                  <div class="flex items-start gap-2.5 justify-end">
                     <div class="bg-background-light p-3 rounded-lg rounded-tr-none border border-text-dark/30">
-
                       <p class="text-sm text-text-dark">Amén, un saludo a todos.</p>
-
                     </div>
-
-                    <división
-
-                      clase="ancho-8 alto-8 redondeado-completo fondo-cubierta fondo-centro encogimiento-0 borde-2 borde-texto-oscuro"
-
-                      estilo='imagen-de-fondo: url("https://picsum.photos/seed/user2/32/32")'
-
+                    <div
+                      class="w-8 h-8 rounded-full bg-cover bg-center shrink-0 border-2 border-text-dark"
+                      style='background-image: url("https://picsum.photos/seed/user2/32/32")'
                     ></div>
-
                   </div>
-
                 </div>
-
-                <div class="mt-4 elementos flexibles-centro espacio-2">
-
-                  <entrada
-
-                    clase="flex-1 w-full min-w-0 redimensionar-ninguno desbordamiento-oculto redondeado-lg texto-texto-claro foco:contorno-0 foco:anillo-4 foco:anillo-primario foco:anillo-opacidad-50 borde-gris-600 fondo-oscuro h-11 marcador de posición:texto-texto-oscuro px-3 texto-pequeño transición-todo duración-300"
-
+                <div class="mt-4 flex items-center gap-2">
+                  <input
+                    class="flex-1 w-full min-w-0 resize-none overflow-hidden rounded-lg text-text-light focus:outline-0 focus:ring-4 focus:ring-primary focus:ring-opacity-50 border-gray-600 bg-background-dark h-11 placeholder:text-text-dark px-3 text-sm transition-all duration-300"
                     placeholder="Escribe tu mensaje..."
-
-                    valor=""
-
+                    value=""
                   />
-
-                  <botón
-
-                    clase="elementos flexibles-centro justificar-centro redondeado-lg h-11 w-11 fondo-primario texto-blanco sombra-md sombra-primaria/30 pasar el cursor: fondo-primario/90 transición-todo duración-200"
-
+                  <button
+                    class="flex items-center justify-center rounded-lg h-11 w-11 bg-primary text-white shadow-md shadow-primary/30 hover:bg-primary/90 transition-all duration-200"
                   >
-
-                    <span class="material-symbols-outlined">enviar</span>
-
-                  </botón>
-
+                    <span class="material-symbols-outlined">send</span>
+                  </button>
                 </div>
-
               </div>
-
             </div>
-
             
-
             <div class="bg-background-dark/70 p-8 rounded-xl shadow-lg border-t-4 border-primary/50 backdrop-blur-sm">
-
                 <h2 class="text-3xl font-bold text-text-light mb-6 flex items-center gap-2">
-
-                    <span class="material-symbols-outlined text-primary text-3xl">horario</span>
-
+                    <span class="material-symbols-outlined text-primary text-3xl">schedule</span>
                     Horario de Cultos
-
                 </h2>
-
-                <div class="cuadrícula cuadrícula-cols-2 espacio-x-12 espacio-y-4 texto-texto-luz">
-
+                <div class="grid grid-cols-2 gap-x-12 gap-y-4 text-text-light">
     <div class="flex justify-between items-center border-b border-background-dark py-2">
-
         <span class="font-medium">Lunes</span>
-
-        20:00 h
-
+        <span class="text-primary font-bold">8:00 PM</span>
     </div>
-
     
-
     <div class="flex justify-between items-center border-b border-background-dark py-2">
-
         <span class="font-medium">Jueves</span>
-
-        20:00 h
-
+        <span class="text-primary font-bold">8:00 PM</span>
     </div>
-
     
-
     <div class="flex justify-between items-center border-b border-background-dark py-2">
-
         <span class="font-medium">Viernes</span>
-
-        20:00 h
-
+        <span class="text-primary font-bold">8:00 PM</span>
     </div>
-
     
-
     <div class="flex justify-between items-center border-b border-background-dark py-2">
-
         <span class="font-medium">Sábado</span>
-
-        20:00 h
-
+        <span class="text-primary font-bold">8:00 PM</span>
     </div>
-
     
-
     <div class="flex justify-between items-center py-2 col-span-2"> 
-
         <span class="font-medium">Domingo (Mañana)</span>
-
-        <span class="text-primary font-bold">9:00 a. m. y 12:00 p. m.</span>
-
+        <span class="text-primary font-bold">9:00 AM y 12:00 PM</span>
     </div>
-
 </div>
-
-                <p class="texto-texto-oscuro texto-sm mt-6">
-
+                <p class="text-text-dark text-sm mt-6">
                     Te esperamos en la presencia de Dios. ¡Trae a un Amigo!
-
                 </p>
-
             </div>
-
             
-
             <div class="bg-background-dark/70 p-8 rounded-xl shadow-lg backdrop-blur-sm">
-
               <h2 class="text-3xl font-bold text-text-light mb-4">Quiénes Somos</h2>
-
-              <p class="text-text-dark lead-relaxed">
-
+              <p class="text-text-dark leading-relaxed">
                 Iglesia Casa de Refugio/Radio "Ha Resucitado" es un ministerio cristiano dedicado a la
-
                 proclamación del evangelio de Jesucristo a través de la música, la
-
                 enseñanza y la comunión. Nacimos en el corazón de Dios con el
-
                 propósito de ser una luz de esperanza y un faro de fe para todas
-
-                las naciones. Nuestra historia es un testimonio del poder.
-
+                las naciones. Nuestra historia es un testimonio del poder
                 transformador de Dios, comenzando como un pequeño proyecto de
-
                 radio en línea y creciendo hasta convertirnos en una comunidad
-
                 global de creyentes unidos por el amor de Cristo. Creemos en el
-
                 poder de la Palabra y la adoración para cambiar vidas, restaurar
-
                 corazones y construir el Reino de Dios aquí en la Tierra.
-
               </p>
-
             </div>
-
-
 
             <div id="contacto" class="bg-background-dark/70 p-8 rounded-xl shadow-lg text-center backdrop-blur-sm">
-
               <h2 class="text-3xl font-bold text-text-light">
-
                 Síguenos y Contáctanos
-
               </h2>
-
               <p class="text-text-dark mt-2 mb-6 max-w-lg mx-auto">
-
                 Mantente conectado con nosotros, participa en nuestras
-
                 conversaciones y sé parte de nuestra comunidad en línea.
-
               </p>
-
               <div class="flex justify-center items-center gap-4 mb-6">
-
                 <a
-
-                  clase="texto-primario hover:texto-primario/80 colores de transición texto-3xl"
-
+                  class="text-primary hover:text-primary/80 transition-colors text-3xl"
                   href="https://www.facebook.com/profile.php?id=61580656551288"
-
-                  objetivo="_en blanco"
-
-                  ><i clase="fab fa-facebook"></i
-
+                  target="_blank"
+                  ><i class="fab fa-facebook"></i
                 ></a>
-
                 <a
-
-                  clase="texto-primario hover:texto-primario/80 colores de transición texto-3xl"
-
+                  class="text-primary hover:text-primary/80 transition-colors text-3xl"
                   href="TU_URL_DE_INSTAGRAM"
-
-                  objetivo="_en blanco"
-
+                  target="_blank"
                   ><i class="fab fa-instagram"></i
-
                 ></a>
-
                 <a
-
-                  clase="texto-primario hover:texto-primario/80 colores de transición texto-3xl"
-
+                  class="text-primary hover:text-primary/80 transition-colors text-3xl"
                   href="https://www.youtube.com/@radio-ha-resucitado"
-
-                  objetivo="_en blanco"
-
-                  ><i clase="fab fa-youtube"></i
-
+                  target="_blank"
+                  ><i class="fab fa-youtube"></i
                 ></a>
-
               </div>
-
               <a
-
-                clase="elementos flexibles en línea-centro justificar-centro redondeado-largo alto-12 px-6 fondo-primario texto-blanco espacio-2 texto-base fuente-negrita sombra-largo sombra-primaria/40 pasar el cursor: sombra-xl pasar el cursor: escala-105 transición-todo"
-
+                class="inline-flex items-center justify-center rounded-lg h-12 px-6 bg-primary text-white gap-2 text-base font-bold shadow-lg shadow-primary/40 hover:shadow-xl hover:scale-105 transition-all"
                 href="https://wa.me/18039225417?text=Hola%20Radio%20Ha%20Resucitado%2C%20quisiera%20pedir%20una%20oraci%C3%B3n."
-
-                objetivo="_en blanco"
-
+                target="_blank"
               >
-
                 <i class="fab fa-whatsapp"></i>
-
                 <span>Envíanos un WhatsApp</span> </a>
-
             </div>
-
-
 
             <div>
-
     <h2
-
-        clase="texto-3xl fuente-negrita texto-texto-claro px-4 pb-4 pt-8"
-
+        class="text-3xl font-bold text-text-light px-4 pb-4 pt-8"
     >
-
-        Noticias recientes
-
+        Noticias Recientes
     </h2>
-
-    <división
-
-        clase="cuadrícula cuadrícula-columnas-1 md:cuadrícula-columnas-2 lg:cuadrícula-columnas-3 espacio-6 p-4"
-
+    <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4"
     >
-
         
-
-        <división
-
-            clase="bg-background-dark/70 redondeado-xl desbordamiento-sombra oculta-lg grupo fondo-desenfoque-sm"
-
+        <div
+            class="bg-background-dark/70 rounded-xl overflow-hidden shadow-lg group backdrop-blur-sm"
         >
-
             <a href="https://www.facebook.com/watch?v=1501766384490245"_blank"> 
-
-                <división
-
-                    clase="ancho-completo alto-40 fondo-cubierta fondo-centro transición-transformación duración-300 grupo-flotar:escala-105"
-
-                    estilo='imagen-de-fondo: url("IMAGEN_NOTICIA_1.jpg");'
-
+                <div
+                    class="w-full h-40 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                    style='background-image: url("IMAGEN_NOTICIA_1.jpg");'
                 ></div>
-
                 <div class="p-5">
-
                     <p class="text-primary text-sm font-medium">CATEGORÍA 1</p>
-
                     
-
                     <p
-
-                        clase="texto-texto-claro texto-grande fuente-negrita mt-1 grupo-flotar:texto-primario colores-de-transición"
-
+                        class="text-text-light text-lg font-bold mt-1 group-hover:text-primary transition-colors"
                     >
-
                         TÍTULO DE LA PUBLICACIÓN 1
-
                     </p>
-
                     
-
-                    <p class="texto-texto-oscuro texto-sm mt-2">
-
+                    <p class="text-text-dark text-sm mt-2">
                         DESCRIPCIÓN CORTA DE LA NOTICIA 1. Haz clic para más detalles.
-
                     </p>
-
                 </div>
-
             </a>
-
         </div>
-
         
-
-        <división
-
-            clase="bg-background-dark/70 redondeado-xl desbordamiento-sombra oculta-lg grupo fondo-desenfoque-sm"
-
+        <div
+            class="bg-background-dark/70 rounded-xl overflow-hidden shadow-lg group backdrop-blur-sm"
         >
-
             <a href="URL_DEL_ANUNCIO_2" target="_blank">
-
-                <división
-
-                    clase="ancho-completo alto-40 fondo-cubierta fondo-centro transición-transformación duración-300 grupo-flotar:escala-105"
-
-                    estilo='imagen-de-fondo: url("IMAGEN_NOTICIA_2.jpg");'
-
+                <div
+                    class="w-full h-40 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                    style='background-image: url("IMAGEN_NOTICIA_2.jpg");'
                 ></div>
-
                 <div class="p-5">
-
                     <p class="text-primary text-sm font-medium">CATEGORÍA 2</p>
-
                     
-
                     <p
-
-                        clase="texto-texto-claro texto-grande fuente-negrita mt-1 grupo-flotar:texto-primario colores-de-transición"
-
+                        class="text-text-light text-lg font-bold mt-1 group-hover:text-primary transition-colors"
                     >
-
                         TÍTULO DE LA PUBLICACIÓN 2
-
                     </p>
-
                     
-
-                    <p class="texto-texto-oscuro texto-sm mt-2">
-
+                    <p class="text-text-dark text-sm mt-2">
                         DESCRIPCIÓN CORTA DE LA NOTICIA 2. Haz clic para más detalles.
-
                     </p>
-
                 </div>
-
             </a>
-
         </div>
-
         
-
-        <división
-
-            clase="bg-background-dark/70 redondeado-xl desbordamiento-sombra oculta-lg grupo fondo-desenfoque-sm"
-
+        <div
+            class="bg-background-dark/70 rounded-xl overflow-hidden shadow-lg group backdrop-blur-sm"
         >
-
             <a href="URL_DEL_ANUNCIO_3" target="_blank">
-
-                <división
-
-                    clase="ancho-completo alto-40 fondo-cubierta fondo-centro transición-transformación duración-300 grupo-flotar:escala-105"
-
-                    estilo='imagen-de-fondo: url("IMAGEN_NOTICIA_3.jpg")'
-
+                <div
+                    class="w-full h-40 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                    style='background-image: url("IMAGEN_NOTICIA_3.jpg")'
                 ></div>
-
                 <div class="p-5">
-
                     <p class="text-primary text-sm font-medium">CATEGORÍA 3</p>
-
                     
-
                     <p
-
-                        clase="texto-texto-claro texto-grande fuente-negrita mt-1 grupo-flotar:texto-primario colores-de-transición"
-
+                        class="text-text-light text-lg font-bold mt-1 group-hover:text-primary transition-colors"
                     >
-
                         TÍTULO DE LA PUBLICACIÓN 3
-
                     </p>
-
                     
-
-                    <p class="texto-texto-oscuro texto-sm mt-2">
-
+                    <p class="text-text-dark text-sm mt-2">
                         DESCRIPCIÓN CORTA DE LA NOTICIA 3. Haz clic para más detalles.
-
                     </p>
-
                 </div>
-
             </a>
-
         </div>
-
     </div>
-
 </div>
-
-        </principal>
-
+        </main>
         
-
         <footer class="bg-background-dark/70 border-t border-background-light mt-12 z-10 backdrop-blur-sm">
-
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-            <división
-
-              clase="flex flex-col md:flex-row justificar-entre-elementos-inicio-espacio-8"
-
+            <div
+              class="flex flex-col md:flex-row justify-between items-start gap-8"
             >
-
               
-
               <div class="flex flex-col gap-3">
-
-                <div class="elementos flexibles-centro espacio-3">
-
-                    <div class="w-7 h-7 texto-primario">
-
+                <div class="flex items-center gap-3">
+                    <div class="w-7 h-7 text-primary">
                       <svg
-
-                        fill="ninguno"
-
+                        fill="none"
                         viewBox="0 0 48 48"
-
                         xmlns="http://www.w3.org/2000/svg"
-
                       >
-
-                        <ruta
-
+                        <path
                           d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
-
-                          relleno="coloractual"
-
-                        ></ruta>
-
+                          fill="currentColor"
+                        ></path>
                       </svg>
-
                     </div>
-
-                    <span class="texto-texto-oscuro texto-sm"
-
+                    <span class="text-text-dark text-sm"
                       >© 2024 Ha Resucitado Radio. Todos los derechos reservados.</span
-
                     >
-
                 </div>
-
-                <div class="artículos flexibles-espacio central-4 mt-2">
-
+                <div class="flex items-center gap-4 mt-2">
                     <a
-
-                      clase="texto-primario hover:texto-primario/80 colores-de-transición"
-
+                      class="text-primary hover:text-primary/80 transition-colors"
                       href="https://www.facebook.com/profile.php?id=61580656551288"
-
-                      objetivo="_en blanco"
-
-                      ><i clase="fab fa-facebook-f fa-lg"></i
-
+                      target="_blank"
+                      ><i class="fab fa-facebook-f fa-lg"></i
                     ></a>
-
                     <a
-
-                      clase="texto-primario hover:texto-primario/80 colores-de-transición"
-
+                      class="text-primary hover:text-primary/80 transition-colors"
                       href="TU_URL_DE_INSTAGRAM"
-
-                      objetivo="_en blanco"
-
+                      target="_blank"
                       ><i class="fab fa-instagram fa-lg"></i
-
                     ></a>
-
                     <a
-
-                      clase="texto-primario hover:texto-primario/80 colores-de-transición"
-
+                      class="text-primary hover:text-primary/80 transition-colors"
                       href="https://www.youtube.com/@radio-ha-resucitado"
-
-                      objetivo="_en blanco"
-
-                      ><i clase="fab fa-youtube fa-lg"></i
-
+                      target="_blank"
+                      ><i class="fab fa-youtube fa-lg"></i
                     ></a>
-
                     <a
-
-                      clase="texto-primario hover:texto-primario/80 colores-de-transición"
-
+                      class="text-primary hover:text-primary/80 transition-colors"
                       href="https://wa.me/18039225417?text=Hola%20Radio%20Ha%20Resucitado%2C%20quisiera%20pedir%20una%20oraci%C3%B3n."
-
-                      objetivo="_en blanco"
-
-                      ><i clase="fab fa-whatsapp fa-lg"></i
-
+                      target="_blank"
+                      ><i class="fab fa-whatsapp fa-lg"></i
                     ></a>
-
                 </div>
-
               </div>
 
-
-
-              <div class="cuadrícula cuadrícula-columnas-1 sm:cuadrícula-columnas-2 espacio-8 md:espacio-12">
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-
-                        <div style="text-align: center; padding-top: 30px; border-top: 1px solid var(--background-light);">
-
-                <p class="text-xs text-text-dark font-semibold">Visitas a la página:</p>
-
-               <imagen 
-
-    src="https://hits.seeyounexttime.com/pages/RadioHaResucitado/RadioHaResucitado/hit-counter.svg?style=flat-square&color=blue" 
-
-    alt="Contador de visitas" 
-
-    cargando="perezoso"
-
->
-
-            </div>
-
-                      </div>
-
-        </pie de página>
-
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12">
                   <div>
-
                       <h4 class="font-bold text-text-light mb-2 flex items-center gap-2">
-
-                          <span class="material-symbols-outlined text-primary">Iglesia</span>
-
+                          <span class="material-symbols-outlined text-primary">church</span>
                           Iglesia Casa de Refugio
-
                       </h4>
-
-                      <p class="texto-texto-oscuro texto-sm">
-
+                      <p class="text-text-dark text-sm">
                           **[1918 Augusta Rd]**
-
                           <br>
-
-                          [West Columbia, Carolina del Sur]
-
+                          [West Columbia, SC]
                           <br>
-
-                          [Estados Unidos]
-
+                          [United States]
                       </p>
-
                   </div>
-
                   <div>
-
                       <h4 class="font-bold text-text-light mb-2 flex items-center gap-2">
-
                           <span class="material-symbols-outlined text-primary">radio</span>
-
                           Estudios de Radio
-
                       </h4>
-
-                      <p class="texto-texto-oscuro texto-sm">
-
+                      <p class="text-text-dark text-sm">
                           **[1918 Augusta Rd]**
-
                           <br>
-
-                          [West Columbia, Carolina del Sur]
-
+                          [West Columbia, SC]
                           <br>
-
-                          [Estados Unidos]
-
+                          [United States]
                       </p>
-
                   </div>
-
               </div>
 
-
-
             </div>
-
           </div>
-
-        </pie de página>
-
-        
-
+        </footer>
       </div>
-
-      <división
-
-        clase="w-full h-2 bg-primary shadow-xl shadow-primary/40"
-
+      <div
+        class="w-full h-2 bg-primary shadow-xl shadow-primary/40"
       ></div>
-
     </div>
-
-      </cuerpo>
-
+  <div style="text-align: center; margin-top: 30px; padding: 10px;">
+    <p class="text-xs text-white font-semibold">VISITAS A LA PÁGINA (Si ves esto, el código está bien):</p>
+    <img 
+        src="https://hits.seeyounexttime.com/pages/haresucitado/RadioHaResucitado/hit-counter.svg?style=flat-square&color=blue" 
+        alt="Contador de Visitas" 
+        loading="lazy"
+    >
+</div>
+    </body>
 </html>
+
+
 
 
 
